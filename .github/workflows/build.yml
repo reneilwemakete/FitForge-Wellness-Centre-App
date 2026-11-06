@@ -1,0 +1,16 @@
+name: Build and regression checks
+on:
+  push:
+  pull_request:
+jobs:
+  fitforge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Build
+        run: dotnet build FitForge.csproj --configuration Release
+      - name: Regression checks
+        run: dotnet run --project tests/FitForge.Tests.csproj --configuration Release
